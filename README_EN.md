@@ -3,6 +3,21 @@
 [Русский README](README.md) · [Formal specification](GRAPH_SPEC.md)
 · [Melinda Green's original puzzle page](https://superliminal.com/cube/2x2x2x2/)
 
+## Photograph and demonstrations
+
+[![Ernő Rubik examining Melinda Green's physical 2×2×2×2 puzzle](https://superliminal.com/cube/2x2x2x2/erno2x2x2x2g4g13.jpg)](https://superliminal.com/cube/2x2x2x2/)
+
+*Ernő Rubik examining the puzzle at Gathering for Gardner 13.
+Photo from [Melinda Green's website](https://superliminal.com/cube/2x2x2x2/),
+displayed from its original URL; image rights remain with the rights holder.*
+
+- [Introduction and demonstration](https://www.youtube.com/watch?v=_1ZPQV-ejtA): the main video linked by the puzzle's author.
+- [Canonical Moves](https://www.youtube.com/watch?v=DzRH8BOJL8Q): permitted physical manipulations.
+- [Physical puzzle alongside its virtual 4D counterpart](https://www.youtube.com/watch?v=k6ZSu0xOPbQ): Marc Ringuette's side-by-side demonstration.
+
+These videos illustrate physical manipulations. The search metric used here is
+defined separately in [GRAPH_SPEC.md](GRAPH_SPEC.md).
+
 Melinda Green created a physical realization of the four-dimensional analogue
 of the 2×2×2 Rubik's cube. Her site describes it as the first physical 3D
 embodiment of a 4D twisty puzzle; its earliest listed solutions date to 2017.
@@ -56,4 +71,4 @@ proof, physical interpretation and limitations.
 Puzzle design: **Melinda Green**. Graph package prepared for **Grisha Pochuev**
 with AI assistance. Original coordinate-based implementation, Apache-2.0 licensed;
 the license does not cover the physical design or third-party materials.
-No puzzle images or simulator implementation have been copied.
+The photo above is embedded from its original website. No simulator implementation has been copied.
