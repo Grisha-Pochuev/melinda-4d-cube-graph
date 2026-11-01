@@ -77,6 +77,59 @@ is fixed. This leaves **92 generators**: 23 rotations for each of the four cells
 not containing that corner. The reduction preserves shortest-path distances
 in the chosen metric; see [GRAPH_SPEC.md](GRAPH_SPEC.md) for the proof.
 
+## Two graph representations of the same puzzle
+
+This repository publishes **both a 184-move fixed-frame model and a 92-move
+rotation-reduced model**. These describe the same physical puzzle under different
+state conventions; the 92-move version does not discard half of the puzzle.
+
+| Representation | Cells used | Rotations per cell | Generators |
+| --- | ---: | ---: | ---: |
+| Fixed coordinate frame | All 8 cells | 23 | **184** |
+| Fixed oriented corner; whole-puzzle rotations identified | 4 cells not containing that corner | 23 | **92** |
+
+**184-move model:** [data/framed_puzzle_info.json](data/framed_puzzle_info.json)
+retains the puzzle's orientation relative to fixed coordinate axes. Rotated
+copies are separate states. Its state space is 192 times larger than the
+rotation-reduced state space. Solving to the exact framed identity can require
+a different number of moves than solving up to a free whole-puzzle rotation.
+
+**92-move model (the current default):**
+[data/puzzle_info.json](data/puzzle_info.json) identifies states that differ
+only by a proper whole-puzzle rotation. One chosen corner is always returned
+to its reference position and orientation. A turn of a cell containing that
+corner, followed by this normalization, is equivalent to an inverse turn of
+the opposite cell. Thus all eight cells' turns are represented using only
+four cells in the normalized coordinates.
+
+We chose the 92-move representation to avoid duplicate orientations and reduce
+the number of neighbors searched. **It preserves shortest-path distances only
+for the stated problem with free whole-puzzle reorientation**, as proved in
+[GRAPH_SPEC.md](GRAPH_SPEC.md#5-why-fixing-a-corner-is-valid).
+It does not claim equality with distances to the exact identity in the
+unreduced fixed-frame graph.
+
+The supplied examples, baseline solutions, verifier and default CayleyPy adapter
+use the **92-move model**. Do not mix the 184-move file with this benchmark.
+
+### What must be agreed before a competition?
+
+Both representations are proposals for community review, not an approved
+CayleyPy competition specification. Before a competition is launched,
+organizers should confirm:
+
+- **Allowed generators and their costs:** should every one of the 23 cell
+  rotations cost one move, or should a smaller set of elementary turns be used?
+- **Treatment of reorientation:** are whole-puzzle rotations, including
+  completed gyros, free, or should physical actions carry a cost?
+- **The target state:** must a solution restore an exact coordinate frame,
+  or is any whole-puzzle orientation of the solved puzzle acceptable?
+
+The existing 184-move model does not by itself count the intermediate physical
+actions of a gyro. Such a scoring system would require a separate model.
+Technical compatibility with CayleyPy does not imply approval of these choices;
+see its [graph contribution guide](https://github.com/cayleypy/cayleypy#how-to-add-a-new-cayley-graph).
+
 ## Getting started
 
 Download the repository or clone it:
