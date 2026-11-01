@@ -1,5 +1,8 @@
 # Validation record — 2026-11-01
 
+The follow-up [repository audit](AUDIT.md) reran these checks and expanded the
+unit suite to **15 passing tests**. The table below records the original run.
+
 Executed locally before the initial publication:
 
 | Check | Result |

@@ -1,6 +1,6 @@
 """Geometry, quotient, serialization and invalid-submission regression tests."""
 
-from collections import Counter
+from collections import Counter, deque
 import csv
 import json
 from pathlib import Path
@@ -64,6 +64,23 @@ class GraphTests(unittest.TestCase):
         for rotation in rotations:
             self.assertEqual(graph.normalize(rotation), graph.SOLVED)
 
+    def test_reference_corner_orbit(self):
+        # Enumerate only the ordered reference-corner orbit, not all states.
+        moves = [graph.inverse(p) for _, p in graph.generators(False)]
+        seen = {graph.REFERENCE}
+        pending = deque([graph.REFERENCE])
+        while pending:
+            corner = pending.popleft()
+            for move in moves:
+                image = tuple(move[index] for index in corner)
+                if image not in seen:
+                    seen.add(image)
+                    pending.append(image)
+        rigid_images = {tuple(graph.inverse(p)[i] for i in graph.REFERENCE)
+                        for p in graph.rigid_rotations()}
+        self.assertEqual(len(seen), 192)
+        self.assertEqual(seen, rigid_images)
+
     def test_quotient_neighbors_and_rotation_invariance(self):
         rng = Random(4)
         fixed = graph.generators()
@@ -114,6 +131,42 @@ class GraphTests(unittest.TestCase):
         self.assertEqual(json.loads((data / "puzzle_info.json").read_text()), graph.graph_spec())
         self.assertEqual(json.loads((data / "framed_puzzle_info.json").read_text()), graph.graph_spec(False))
         self.assertEqual(verify(data / "examples.json", data / "sample_submission.csv"), 800)
+
+    def test_all_published_data_reproduces_byte_for_byte(self):
+        data = Path(__file__).resolve().parent / "data"
+        with tempfile.TemporaryDirectory() as directory:
+            export(directory)
+            for path in data.iterdir():
+                if path.is_file():
+                    self.assertEqual(path.read_bytes(), (Path(directory) / path.name).read_bytes(), path.name)
+
+    def test_normalized_neighbors_from_unfixed_states(self):
+        rng = Random(2026)
+        full = graph.generators(False)
+        state = graph.SOLVED
+        for _ in range(10):
+            for _ in range(20):
+                state = graph.apply(state, rng.choice(full)[1])
+            normalized = graph.normalize(state)
+            expected = {graph.apply(normalized, p) for _, p in graph.generators()}
+            actual = {graph.normalize(graph.apply(state, p)) for _, p in full}
+            self.assertEqual(actual, expected)
+
+    def test_csv_shape_empty_solution_and_unknown_ids(self):
+        with tempfile.TemporaryDirectory() as directory:
+            directory = Path(directory)
+            examples = directory / "examples.json"
+            submission = directory / "submission.csv"
+            examples.write_text(json.dumps({"metric": graph.METRIC, "cases": [
+                {"id": "0", "initial_state": list(graph.SOLVED)}
+            ]}), encoding="utf-8")
+            submission.write_text("id,moves\n0,\n", encoding="utf-8")
+            self.assertEqual(verify(examples, submission), 0)
+            for text in ("id,moves\n0\n", "id,moves\n0,,extra\n",
+                         "id,moves\n1,\n", "moves,id\n,0\n"):
+                submission.write_text(text, encoding="utf-8")
+                with self.assertRaises(ValueError):
+                    verify(examples, submission)
 
     def test_rejects_bad_submissions(self):
         with tempfile.TemporaryDirectory() as directory:

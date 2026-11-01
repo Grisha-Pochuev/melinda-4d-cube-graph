@@ -198,6 +198,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for submission details.
 | [check_group_order.py](check_group_order.py) | Independent exact group-order verification with SymPy |
 | [check_cayleypy.py](check_cayleypy.py) | Integration check using CayleyPy |
 | [VALIDATION.md](VALIDATION.md) | Recorded validation results |
+| [AUDIT.md](AUDIT.md) | Review findings, fixes and remaining limitations |
 
 `puzzle_info.json` uses **this repository's portable schema**; it is not presented
 as a standard Kaggle upload format. The `as_cayleypy()` function provides the
@@ -215,6 +216,9 @@ The examples are reproducible random walks, not uniform samples of states.
 Their scramble lengths of 10, 30 and 60 are known upper bounds, **not proven
 minimum distances**. This is a public starting dataset for experiments, not a
 hidden test set for an official competition.
+
+GitHub Actions checks are **manual only** to reserve shared runner capacity.
+Pushes and pull requests do not launch them. The commands above run locally.
 
 ## Verifying the state count
 

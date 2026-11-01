@@ -15,8 +15,9 @@ python benchmark.py verify data/sample_submission.csv
 
 Python 3.9+ is sufficient; these commands need no additional packages.
 The baseline solves all 24 examples in 800 moves. A lower total is better;
-800 is not a proven optimum. The examples are public and contain their scramble
-sequences, so this is a reproducible starting benchmark, not a hidden test set.
+800 is not a proven optimum. The starting states and baseline solutions are
+public, and the scrambles can be reproduced with `python benchmark.py export`.
+This is a reproducible starting benchmark, not a hidden test set.
 
 ## Produce a candidate
 

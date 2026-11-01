@@ -1,9 +1,12 @@
 name: Check graph definition
 
 on:
-  push:
-  pull_request:
+  # Manual only: shared GitHub Actions capacity is reserved for other work.
   workflow_dispatch:
+
+concurrency:
+  group: graph-check-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -11,6 +14,7 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
