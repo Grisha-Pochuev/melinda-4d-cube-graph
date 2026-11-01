@@ -6,6 +6,19 @@ Rubik's puzzle, for the CayleyPy community and anyone searching for short soluti
 [Formal specification](GRAPH_SPEC.md) · [Contributing](CONTRIBUTING.md)
 · [Melinda Green's original puzzle page](https://superliminal.com/cube/2x2x2x2/)
 
+## The physical puzzle in motion
+
+[![Animated demonstration of a gyro on Melinda Green's physical 2×2×2×2 puzzle](https://superliminal.com/cube/wiki/images/GyroGif.gif)](https://superliminal.com/cube/wiki/Physical_2%5E4_Methods.html)
+
+*A gyro reorientation demonstrated with the physical puzzle.
+Source: [Physical 2^4 Methods — Superliminal Wiki](https://superliminal.com/cube/wiki/Physical_2%5E4_Methods.html).
+The animation is embedded from the original website; rights remain with its
+respective rights holder.*
+
+This sequence changes the puzzle's four-dimensional orientation. In the
+proposed free-reorientation metric below, the completed gyro has zero cost;
+its intermediate physical actions are not separate graph edges.
+
 ## Photograph and demonstrations
 
 [![Ernő Rubik examining Melinda Green's physical 2×2×2×2 puzzle](https://superliminal.com/cube/2x2x2x2/erno2x2x2x2g4g13.jpg)](https://superliminal.com/cube/2x2x2x2/)
@@ -244,8 +257,8 @@ The auxiliary fixed-frame model has 192 times as many states.
 
 The graph description and software package were prepared for **Grisha Pochuev's**
 initiative with AI assistance. The implementation constructs moves from
-coordinates; no physical simulator implementation was copied. The photograph
-above is embedded from its original website.
+coordinates; no physical simulator implementation was copied. The photograph and animation
+above are embedded from their original websites.
 
 Repository code is licensed under [Apache-2.0](LICENSE). This license does not
 cover the physical puzzle design, its name or third-party materials.
