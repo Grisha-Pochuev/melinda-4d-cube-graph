@@ -1,94 +1,100 @@
-# Melinda's 4D Cube — граф головоломки 2×2×2×2
+# Melinda's 4D Cube — the 2×2×2×2 puzzle graph
 
-**Компактное, исполняемое описание графа четырёхмерного кубика Мелинды Грин
-для сообщества CayleyPy и всех, кто ищет короткие решения головоломок.**
+**An executable graph description of Melinda Green's physical four-dimensional
+Rubik's puzzle, for the CayleyPy community and anyone searching for short solutions.**
 
-[English description](README_EN.md) · [Точная математическая постановка](GRAPH_SPEC.md)
-· [Описание на сайте Мелинды Грин](https://superliminal.com/cube/2x2x2x2/)
+[Formal specification](GRAPH_SPEC.md) · [Contributing](CONTRIBUTING.md)
+· [Melinda Green's original puzzle page](https://superliminal.com/cube/2x2x2x2/)
 
-## Фотография и видео
+## Photograph and demonstrations
 
-[![Эрнё Рубик рассматривает физический кубик Мелинды Грин 2×2×2×2](https://superliminal.com/cube/2x2x2x2/erno2x2x2x2g4g13.jpg)](https://superliminal.com/cube/2x2x2x2/)
+[![Ernő Rubik examining Melinda Green's physical 2×2×2×2 puzzle](https://superliminal.com/cube/2x2x2x2/erno2x2x2x2g4g13.jpg)](https://superliminal.com/cube/2x2x2x2/)
 
-*Эрнё Рубик рассматривает головоломку на Gathering for Gardner 13.
-Фотография с [сайта Мелинды Грин](https://superliminal.com/cube/2x2x2x2/);
-изображение загружается с исходного сайта, права остаются у правообладателя.*
+*Ernő Rubik examining the puzzle at Gathering for Gardner 13.
+Photo from [Melinda Green's website](https://superliminal.com/cube/2x2x2x2/),
+displayed from its original URL; image rights remain with the rights holder.*
 
-- [Знакомство с кубиком и демонстрация его устройства](https://www.youtube.com/watch?v=_1ZPQV-ejtA) — основной ролик со страницы автора.
-- [Допустимые физические движения — Canonical Moves](https://www.youtube.com/watch?v=DzRH8BOJL8Q) — как можно переставлять части головоломки.
-- [Физическая головоломка рядом с виртуальной 4D-моделью](https://www.youtube.com/watch?v=k6ZSu0xOPbQ) — демонстрация Марка Рингетта, помогающая увидеть связь конструкции с четырёхмерным кубиком.
+- [Introduction and demonstration](https://www.youtube.com/watch?v=_1ZPQV-ejtA): the main video linked by the puzzle's author.
+- [Canonical Moves](https://www.youtube.com/watch?v=DzRH8BOJL8Q): permitted physical manipulations.
+- [Physical puzzle alongside its virtual 4D counterpart](https://www.youtube.com/watch?v=k6ZSu0xOPbQ): Marc Ringuette's side-by-side demonstration.
 
-Видео показывают физические движения. Правила подсчёта ходов для задачи поиска
-в этом репозитории отдельно определены ниже и в [GRAPH_SPEC.md](GRAPH_SPEC.md).
+These videos illustrate physical manipulations. The search metric used here is
+defined separately below and in [GRAPH_SPEC.md](GRAPH_SPEC.md).
 
-## Почему этот кубик необычный
+## What makes this puzzle special?
 
-Обычный кубик Рубика — трёхмерная головоломка. Melinda's 2×2×2×2 представляет
-её четырёхмерный аналог: у тессеракта восемь кубических ячеек вместо шести
-квадратных граней. В головоломке 16 угловых элементов, у каждого — четыре цвета.
+An ordinary Rubik's cube is three-dimensional. Melinda's 2×2×2×2 represents its
+four-dimensional analogue: a tesseract has eight cubic cells instead of six
+square faces. The puzzle has sixteen corner pieces, each bearing four colors.
 
-Мелинда Грин создала физическое воплощение этой головоломки, которое можно
-держать в руках и переставлять. На своём сайте она описывает его как первую
-физическую трёхмерную реализацию четырёхмерной вращательной головоломки.
-Первые решения в её списке относятся к 2017 году.
+Melinda Green created a physical version that can be held and manipulated.
+On her website, she describes it as the world's first physical 3D embodiment of
+a 4D twisty puzzle. The earliest solutions in her list date to 2017.
 
-Это не буквально предмет в четырёхмерном пространстве: магнитная конструкция
-в нашем трёхмерном мире воспроизводит допустимые преобразования 4D-кубика.
-Специальная последовательность `gyro` позволяет менять его четырёхмерную
-ориентацию и получать доступ к другим ячейкам.
+The object itself exists in our three-dimensional world. Its magnetic
+construction implements transformations of the 4D puzzle. A special sequence
+called a `gyro` changes its four-dimensional orientation, making other cells
+accessible.
 
-По данным автора, с точностью до поворота головоломки целиком имеется
+According to the author, the number of states, up to whole-puzzle rotation, is
 
-**3 357 894 533 384 932 272 635 904 000 состояний — приблизительно 3,36 × 10²⁷.**
+**3,357,894,533,384,932,272,635,904,000 — approximately 3.36 × 10²⁷.**
 
-Поэтому перечислять все вершины графа бессмысленно. Здесь граф задан через
-небольшой набор перестановок, по которым соседние состояния вычисляются по мере
-необходимости. Все числа и правила можно проверить кодом из репозитория.
+Enumerating every vertex is therefore impractical. This repository defines the
+graph through a small set of permutations, allowing neighboring states to be
+computed on demand. The code makes the definitions and counts independently
+checkable.
 
-## Что предлагается сообществу
+## The challenge for the community
 
-Найти как можно более короткие пути от перемешанных состояний к собранному.
-Заранее знать минимальную длину решения не требуется. Полученное решение
-доказывает только верхнюю границу расстояния, если его оптимальность отдельно
-не установлена.
+Find short paths from scrambled states to the solved state. The optimal solution
+length does not need to be known in advance. A valid solution establishes an
+upper bound on distance unless its optimality is proved separately.
 
-Это **предложение самостоятельной задачи**, а не объявление уже утверждённого
-соревнования CayleyPy/Kaggle. Репозиторий содержит определение графа, данные и
-проверку решений; он не устанавливает призы, сроки или правила внешнего конкурса.
+This is a **proposal for a standalone community problem**, not an announcement
+of an approved CayleyPy or Kaggle competition. The repository supplies a graph
+definition, data and a solution verifier; it does not establish prizes,
+deadlines or the rules of an external competition.
 
-## Что считается одним ходом
+## What counts as one move?
 
-Выбрана явно определённая **метрика поворотов ячейки** (`CTM-free-rotations-v1`):
+The proposed **cell-turn metric** is named `CTM-free-rotations-v1`:
 
-- Один ход — любое нетождественное собственное вращение одной кубической ячейки.
-  Для ячейки таких вращений 23, включая четвертьобороты, полуобороты и повороты
-  на 120° вокруг её пространственных диагоналей.
-- Повороты всей головоломки, в том числе завершённые переориентации `gyro`,
-  имеют нулевую стоимость. Это правило выбранной математической задачи.
-- Физические промежуточные действия внутри `gyro` не являются самостоятельными
-  рёбрами этого графа.
+- One move is any nonidentity proper rotation of one cubic cell. Each cell has
+  23 such rotations, including quarter-turns, half-turns and 120° rotations
+  about its body diagonals.
+- Whole-puzzle rotations, including completed `gyro` reorientations, have zero
+  cost. This is a rule of the proposed mathematical problem.
+- Intermediate physical actions within a `gyro` are not separate graph edges.
 
-Такой подсчёт соответствует поиску по состояниям физического кубика при
-бесплатной смене ориентации. Он **не измеряет число перехватов, магнитных
-соединений или время сборки руками**. Если сообщество захочет учитывать стоимость
-`gyro`, потребуется другая постановка с сохранением ориентации и её стоимостью.
+This metric searches physical-puzzle states with free reorientation. It
+**does not count regrips, magnetic connections or hands-on solving time**.
+Charging for `gyro` operations would require a different formulation that
+retains orientation and assigns costs to those operations.
 
-Чтобы не хранить 192 равнозначных поворота каждого состояния, один угловой
-элемент фиксируется вместе с ориентацией. После этого достаточно **92 ходов**:
-по 23 для каждой из четырёх ячеек, не содержащих этот элемент. Это сохраняет
-кратчайшие расстояния в выбранной метрике; объяснение — в [GRAPH_SPEC.md](GRAPH_SPEC.md).
+To avoid storing 192 equivalent rotations of each state, one oriented corner
+is fixed. This leaves **92 generators**: 23 rotations for each of the four cells
+not containing that corner. The reduction preserves shortest-path distances
+in the chosen metric; see [GRAPH_SPEC.md](GRAPH_SPEC.md) for the proof.
 
-## Начать работу
+## Getting started
 
-Для описания графа и проверки решений достаточно **Python 3.9+**, без сторонних
-библиотек:
+Download the repository or clone it:
+
+```bash
+git clone https://github.com/Grisha-Pochuev/melinda-4d-cube-graph.git
+cd melinda-4d-cube-graph
+```
+
+The graph implementation and solution verifier require **Python 3.9+** and no
+third-party packages:
 
 ```bash
 python -m unittest -v
 python benchmark.py verify data/sample_submission.csv
 ```
 
-Применение одного хода:
+Apply one move:
 
 ```python
 from melinda_graph import SOLVED, generators, apply
@@ -96,10 +102,10 @@ from melinda_graph import SOLVED, generators, apply
 moves = dict(generators())
 name = next(iter(moves))
 state = apply(SOLVED, moves[name])
-# Соседи state: apply(state, permutation) для каждой permutation из moves.
+# Neighbors: apply(state, permutation) for each permutation in moves.values().
 ```
 
-Для уже установленной CayleyPy:
+With CayleyPy installed:
 
 ```python
 from melinda_graph import as_cayleypy
@@ -107,83 +113,84 @@ from cayleypy import CayleyGraph
 
 definition = as_cayleypy()
 graph = CayleyGraph(definition, device="cpu")
-# Можно применять алгоритмы поиска CayleyPy к definition / graph.
+# Use CayleyPy search algorithms with this graph definition.
 ```
 
-## Как участвовать
+## How to participate
 
-1. Скачайте репозиторий или выполните:
-   ```bash
-   git clone https://github.com/Grisha-Pochuev/melinda-4d-cube-graph.git
-   cd melinda-4d-cube-graph
-   ```
-2. Запустите проверку исходных решений из раздела выше.
-3. Используйте состояния из `data/examples.json` и ходы из
-   `data/puzzle_info.json`, чтобы найти более короткие решения.
-4. Сохраните результат в CSV по образцу `data/sample_submission.csv` и выполните
-   `python benchmark.py verify путь/к/вашему.csv`.
-5. Опубликуйте результат через [Issues](https://github.com/Grisha-Pochuev/melinda-4d-cube-graph/issues)
-   или pull request. Укажите сумму длин, алгоритм, время расчёта, оборудование
-   и версию кода; приложите CSV и инструкции для воспроизведения.
+1. Run the tests and baseline verifier above.
+2. Use the states in `data/examples.json` and moves in
+   `data/puzzle_info.json` to search for shorter solutions.
+3. Save your results as a CSV following `data/sample_submission.csv`, then run
+   `python benchmark.py verify path/to/your.csv`.
+4. Share your result through [Issues](https://github.com/Grisha-Pochuev/melinda-4d-cube-graph/issues)
+   or a pull request. Include the total move count, algorithm, runtime, hardware
+   and code version, along with your CSV and reproduction instructions.
 
-Можно также предлагать улучшения алгоритма, проверок и объяснений.
-[Инструкция участникам на английском](CONTRIBUTING.md) описывает формат результата.
+Improvements to algorithms, tests and explanations are also welcome.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for submission details.
 
-## Файлы
+## Repository contents
 
-| Файл | Назначение |
+| File | Purpose |
 | --- | --- |
-| [GRAPH_SPEC.md](GRAPH_SPEC.md) | Формальное описание вершин, рёбер и метрики на английском |
-| [melinda_graph.py](melinda_graph.py) | Построение ходов из геометрии и подключение к CayleyPy |
-| [data/puzzle_info.json](data/puzzle_info.json) | 92 готовые перестановки, начальное состояние, обратные ходы |
-| [data/framed_puzzle_info.json](data/framed_puzzle_info.json) | Вспомогательная модель с 184 ходами и фиксированными осями |
-| [data/examples.json](data/examples.json) | 24 достижимых перемешанных состояния |
-| [data/sample_submission.csv](data/sample_submission.csv) | Проверенные исходные решения; общая длина 800 ходов |
-| [benchmark.py](benchmark.py) | Воспроизведение данных и проверка решений |
-| [test_graph.py](test_graph.py) | Проверки геометрии, обратимости, ориентаций и неверных ответов |
-| [check_group_order.py](check_group_order.py) | Независимый точный подсчёт размера группы с SymPy |
+| [GRAPH_SPEC.md](GRAPH_SPEC.md) | Formal definitions of vertices, edges and the metric |
+| [melinda_graph.py](melinda_graph.py) | Geometric move construction and CayleyPy adapter |
+| [data/puzzle_info.json](data/puzzle_info.json) | 92 explicit permutations, solved state and inverse moves |
+| [data/framed_puzzle_info.json](data/framed_puzzle_info.json) | Auxiliary fixed-frame model with 184 moves |
+| [data/examples.json](data/examples.json) | 24 reachable scrambled states |
+| [data/sample_submission.csv](data/sample_submission.csv) | Verified baseline solutions totaling 800 moves |
+| [benchmark.py](benchmark.py) | Data generation and solution verification |
+| [test_graph.py](test_graph.py) | Geometry, inverse, orientation and invalid-submission checks |
+| [check_group_order.py](check_group_order.py) | Independent exact group-order verification with SymPy |
+| [check_cayleypy.py](check_cayleypy.py) | Integration check using CayleyPy |
+| [VALIDATION.md](VALIDATION.md) | Recorded validation results |
 
-`puzzle_info.json` — переносимый формат **этого репозитория**, а не заявление
-о стандартной схеме загрузки Kaggle. Для CayleyPy предусмотрена функция
-`as_cayleypy()`.
+`puzzle_info.json` uses **this repository's portable schema**; it is not presented
+as a standard Kaggle upload format. The `as_cayleypy()` function provides the
+CayleyPy adapter.
 
-Состояние — массив из 64 **различимых меток**, а не просто массив из восьми
-цветов. Для каждой перестановки используется соглашение:
+A state is an array of 64 **distinct sticker labels**, not merely eight color
+IDs. Permutations follow the gather convention:
 `new_state[j] = state[move[j]]`.
 
-В `sample_submission.csv` столбцы `id,moves`; имена ходов разделяются точками.
-Проверяющая программа требует решение каждого примера и суммирует длины.
-Меньшая сумма лучше. Примеры получены воспроизводимыми случайными блужданиями;
-они не являются равномерной выборкой состояний. Длины 10, 30 и 60 — известные
-верхние границы, **не доказанные минимумы**. Это открытый начальный набор для
-экспериментов, не скрытый набор официального конкурса.
+The submission CSV has columns `id,moves`, with period-separated move names.
+The verifier requires a solution for every example and sums the solution
+lengths. Lower totals are better.
 
-## Проверка числа состояний
+The examples are reproducible random walks, not uniform samples of states.
+Their scramble lengths of 10, 30 and 60 are known upper bounds, **not proven
+minimum distances**. This is a public starting dataset for experiments, not a
+hidden test set for an official competition.
+
+## Verifying the state count
 
 ```bash
 python -m pip install sympy==1.14.0
 python check_group_order.py
 ```
 
-Алгоритм Шрайера — Симса проверяет порядок порождённой группы, не перечисляя
-все состояния. Для модели с закреплённым углом результат совпадает с опубликованным
-Мелиндой числом: `16! × 12^16 / (6 × 192)`. Для вспомогательной модели с
-фиксированными осями состояний в 192 раза больше.
+The Schreier–Sims algorithm checks the order of the generated group without
+enumerating every state. For the fixed-corner model, the result matches
+Melinda's published count: `16! × 12^16 / (6 × 192)`.
+The auxiliary fixed-frame model has 192 times as many states.
 
-## Источники и авторство
+## Sources and credits
 
-- **Автор физической головоломки — Melinda Green**:
-  [страница Melinda's 2×2×2×2](https://superliminal.com/cube/2x2x2x2/).
+- **Physical puzzle designer: Melinda Green** —
+  [Melinda's 2×2×2×2](https://superliminal.com/cube/2x2x2x2/).
 - [Canonical Moves](https://superliminal.com/cube/wiki/Canonical_Moves.html):
-  разрешённые физические движения и переориентации.
+  physical moves and reorientations.
 - [Physical 2^4 Methods](https://superliminal.com/cube/wiki/Physical_2%5E4_Methods.html):
-  объяснение `gyro` и методов сборки.
-- [CayleyPy](https://github.com/cayleypy/cayleypy): библиотека поиска в графах.
+  explanations of `gyro` and solving methods.
+- [CayleyPy](https://github.com/cayleypy/cayleypy): graph-search library.
 
-Описание графа и программный пакет подготовлены для инициативы **Grisha Pochuev**
-с помощью ИИ. Алгоритмическое представление построено здесь из координат;
-код физических симуляторов не копировался; фотография выше показана по внешней ссылке.
+The graph description and software package were prepared for **Grisha Pochuev's**
+initiative with AI assistance. The implementation constructs moves from
+coordinates; no physical simulator implementation was copied. The photograph
+above is embedded from its original website.
 
-Код этого репозитория распространяется по Apache-2.0. Это не лицензия на физическую
-конструкцию, название или сторонние материалы. Репозиторий не аффилирован
-с Мелиндой Грин и не заявляет её одобрение выбранной метрики.
+Repository code is licensed under [Apache-2.0](LICENSE). This license does not
+cover the physical puzzle design, its name or third-party materials.
+This repository is not affiliated with Melinda Green and does not claim her
+endorsement of the proposed metric.
