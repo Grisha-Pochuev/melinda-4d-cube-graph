@@ -1,0 +1,26 @@
+name: Check graph definition
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Check geometry, exports, and solution validation
+        run: python -m unittest -v
+      - name: Verify public baseline
+        run: python benchmark.py verify data/sample_submission.csv
+      - name: Install optional exact group checker
+        run: python -m pip install sympy==1.14.0
+      - name: Check exact group orders
+        run: python check_group_order.py
