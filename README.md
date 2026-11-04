@@ -264,3 +264,5 @@ Repository code is licensed under [Apache-2.0](LICENSE). This license does not
 cover the physical puzzle design, its name or third-party materials.
 This repository is not affiliated with Melinda Green and does not claim her
 endorsement of the proposed metric.
+
+Subscribe to my Telegram blog, where I write about psychology and much more: https://t.me/let_people_dance
